@@ -63,6 +63,7 @@ This structure keeps the UI decoupled from the API communication logic.
 
 ## Project Structure (Simplified)
 
+```
 ClientVCL/
 ├── ClientVCL.dpr
 ├── ClientVCL.dproj
@@ -73,7 +74,7 @@ ClientVCL/
 ├── Models/
 │ └── *.pas
 └── README.md
-
+```
 
 > Folder names may evolve as the project grows.
 
