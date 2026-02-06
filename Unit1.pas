@@ -146,13 +146,15 @@ begin
           end
         );
       except
-        on E: Exception do
+        on E: Exception do begin
+          var Msg := E.Message;
           TThread.Queue(nil,
             procedure
             begin
-              ShowMessage('Erro ao criar cliente: ' + E.Message);
+              ShowMessage(Msg);
             end
           );
+        end;
       end;
       Json.Free;
     end
@@ -174,13 +176,15 @@ begin
           end
         );
       except
-        on E: Exception do
+        on E: Exception do begin
+          var Msg := E.Message;
           TThread.Queue(nil,
             procedure
             begin
-              ShowMessage('Erro ao excluir: ' + E.Message);
+              ShowMessage(Msg);
             end
           );
+        end;
       end;
     end
   );
@@ -263,13 +267,15 @@ begin
           end
         );
       except
-        on E: Exception do
+        on E: Exception do begin
+          var Msg := E.Message;
           TThread.Queue(nil,
             procedure
             begin
-              ShowMessage('Erro ao atualizar: ' + E.Message);
+              ShowMessage(Msg);
             end
           );
+        end;
       end;
     end
   );

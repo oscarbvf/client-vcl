@@ -80,7 +80,7 @@ begin
 
   if not InRange(Res.StatusCode, 200, 299) then
     raise Exception.CreateFmt(
-      'Erro HTTP %d: %s',
+      'Erro ao criar cliente (%d): %s',
       [Res.StatusCode, Body]
     );
 
@@ -104,13 +104,16 @@ end;
 function TApiClient.UpdateCliente(Id: Integer; const AJson: TJSONObject): Boolean;
 var
   Resp: IHTTPResponse;
+  Body: string;
 begin
   Resp := FHttp.Put(FBaseUrl + '/clientes/' + Id.ToString, TStringStream.Create(AJson.ToString, TEncoding.UTF8), nil, [TNetHeader.Create('Content-Type','application/json')]);
+
+  Body := Resp.ContentAsString(TEncoding.UTF8);
 
   if not (Resp.StatusCode in [200, 204]) then
     raise Exception.CreateFmt(
       'Erro ao atualizar cliente (%d): %s',
-      [Resp.StatusCode, Resp.StatusText]
+      [Resp.StatusCode, Body] //Resp.StatusText]
     );
 
   Result := True;
