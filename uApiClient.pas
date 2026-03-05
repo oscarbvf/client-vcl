@@ -57,7 +57,6 @@ begin
     raise Exception.Create('JSON retornado não é um array');
 
   Result := JsonValue as TJSONArray;
-  //Result := TJSONObject.ParseJSONValue(s) as TJSONArray;
 end;
 
 function TApiClient.CreateCliente(const AJson: TJSONObject): Integer;
@@ -113,7 +112,7 @@ begin
   if not (Resp.StatusCode in [200, 204]) then
     raise Exception.CreateFmt(
       'Erro ao atualizar cliente (%d): %s',
-      [Resp.StatusCode, Body] //Resp.StatusText]
+      [Resp.StatusCode, Body]
     );
 
   Result := True;
@@ -122,13 +121,16 @@ end;
 function TApiClient.DeleteCliente(Id: Integer): Boolean;
 var
   Resp: IHTTPResponse;
+  Body: string;
 begin
   Resp := FHttp.Delete(FBaseUrl + '/clientes/' + Id.ToString);
+
+  Body := Resp.ContentAsString(TEncoding.UTF8);
 
   if not (Resp.StatusCode in [200, 204]) then
     raise Exception.CreateFmt(
       'Erro ao excluir cliente (%d): %s',
-      [Resp.StatusCode, Resp.StatusText]
+      [Resp.StatusCode, Body]
     );
 
   Result := True;
